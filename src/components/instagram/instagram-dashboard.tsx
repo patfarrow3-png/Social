@@ -12,12 +12,15 @@ import {
   SlidersHorizontal,
   LayoutGrid,
   List,
+  Wifi,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PostCard } from "@/components/instagram/post-card";
 import { PostFormDialog } from "@/components/instagram/post-form-dialog";
+import { ProfileStats } from "@/components/instagram/profile-stats";
+import { LiveFeed } from "@/components/instagram/live-feed";
 import { Post, PostStatus } from "@/types/instagram";
 import { SEED_POSTS } from "@/lib/seed-posts";
 import { cn } from "@/lib/utils";
@@ -103,7 +106,7 @@ export function InstagramDashboard() {
 
   // Filter state
   const [search, setSearch] = useState("");
-  const [activeTab, setActiveTab] = useState<PostStatus>("scheduled");
+  const [activeTab, setActiveTab] = useState<PostStatus | "live">("scheduled");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   // ── Hydrate from localStorage (or seed) ─────────────────────────────────
@@ -171,7 +174,7 @@ export function InstagramDashboard() {
 
   const filteredPosts = posts.filter(
     (p) =>
-      p.status === activeTab &&
+      p.status === (activeTab === "live" ? "published" : activeTab) &&
       (search === "" ||
         p.caption.toLowerCase().includes(search.toLowerCase()) ||
         p.tags.some((tag) => tag.toLowerCase().includes(search.toLowerCase())) ||
@@ -215,6 +218,9 @@ export function InstagramDashboard() {
         </Button>
       </div>
 
+      {/* ── Live profile stats ────────────────────────────────────────── */}
+      <ProfileStats />
+
       {/* ── Stats strip ────────────────────────────────────────────────── */}
       <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {TABS.map((tab) => {
@@ -256,7 +262,7 @@ export function InstagramDashboard() {
       {/* ── Tabs ───────────────────────────────────────────────────────── */}
       <Tabs
         value={activeTab}
-        onValueChange={(v) => setActiveTab(v as PostStatus)}
+        onValueChange={(v) => setActiveTab(v as PostStatus | "live")}
       >
         <div className="flex items-center justify-between gap-4 mb-4">
           <TabsList>
@@ -272,6 +278,10 @@ export function InstagramDashboard() {
                 </TabsTrigger>
               );
             })}
+            <TabsTrigger value="live" className="gap-1.5">
+              <Wifi className="h-3.5 w-3.5" />
+              Live Posts
+            </TabsTrigger>
           </TabsList>
 
           {/* Search + view toggle */}
@@ -364,6 +374,11 @@ export function InstagramDashboard() {
             )}
           </TabsContent>
         ))}
+
+        {/* Live Posts tab */}
+        <TabsContent value="live">
+          <LiveFeed />
+        </TabsContent>
       </Tabs>
 
       {/* ── Dialog ─────────────────────────────────────────────────────── */}
