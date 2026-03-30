@@ -200,9 +200,13 @@ export function InstagramDashboard() {
             <h1 className="text-2xl font-bold tracking-tight text-foreground">
               Instagram Manager
             </h1>
-            <p className="mt-0.5 text-sm text-muted-foreground">
-              {totalPosts} post{totalPosts !== 1 ? "s" : ""} across all stages
-            </p>
+            <div className="mt-0.5 flex items-center gap-2">
+              <span className="text-sm text-pink-400 font-medium">@_Trippygrippy_</span>
+              <span className="text-muted-foreground/40 text-sm">·</span>
+              <span className="text-sm text-muted-foreground">
+                {totalPosts} post{totalPosts !== 1 ? "s" : ""} across all stages
+              </span>
+            </div>
           </div>
         </div>
         <Button onClick={openNewPost} className="shrink-0">

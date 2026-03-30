@@ -109,8 +109,17 @@ export function Sidebar() {
       <Separator className="bg-sidebar-border" />
 
       {/* Footer */}
-      <div className="px-6 py-4">
-        <p className="text-xs text-muted-foreground">v0.1.0 &middot; Dark Mode</p>
+      <div className="px-4 py-4">
+        <div className="flex items-center gap-2.5 rounded-lg border border-sidebar-border bg-sidebar-accent px-3 py-2.5">
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-pink-500 to-purple-600 text-[10px] font-bold text-white select-none">
+            TG
+          </div>
+          <div className="min-w-0">
+            <p className="truncate text-xs font-medium text-sidebar-foreground">@_Trippygrippy_</p>
+            <p className="text-[10px] text-muted-foreground">Instagram · Connected</p>
+          </div>
+        </div>
+        <p className="mt-3 text-[10px] text-muted-foreground/50 px-1">v0.1.0 &middot; Dark Mode</p>
       </div>
     </aside>
   );
