@@ -25,7 +25,7 @@ from dotenv import load_dotenv
 from pydub import AudioSegment
 
 # Load .env sitting next to this script
-load_dotenv(Path(__file__).parent / ".env")
+load_dotenv(Path(__file__).parent / ".env", override=True)
 
 # ── Config ─────────────────────────────────────────────────────────────────────
 ANTHROPIC_API_KEY  = os.environ.get("ANTHROPIC_API_KEY",  "")
